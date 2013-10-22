@@ -1,0 +1,28 @@
+.form, .grid {
+  text-align: center;
+  margin: 0 auto;
+}
+
+.row {
+  margin: 0;
+  padding: 0;
+  height: 22px;
+}
+
+.cell {
+  margin: 2px;
+  border: #222 1px solid;
+  background-color: #DDD;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+}
+
+.cell:hover, .cell.active:hover {
+  background-color: #666;
+}
+
+.cell.active {
+  background-color: #AAA;
+}
+
