@@ -4,11 +4,11 @@
   <title>Primix</title>
   <link rel="stylesheet" href="./main.css" />
 </head>
-<body ng-app>
+<body ng-app ng-controller="GlobalCtrl">
 <div class="form">
   <input type="text" name="number" size="40"/>
 </div>
-<div class="grid" ng-controller="GridCtrl">
+<div class="grid" ng-controller="GridCtrl" ng-show="$parent.isGridVisible">
   <div class="row row{{ $index }}" ng-repeat="row in grid">
     <div class="cell col{{ $index }}'" ng-repeat="cell in row"
          ng-click="$parent.$parent.onCellClick(cell.row,cell.col)"
@@ -17,6 +17,9 @@
     </div>
   </div>
 </div>
+<footer>
+<a ng-click="toggleGrid()">Toggle Grid</a>
+</footer>
 <script src="./jquery-2.0.3.min.js"></script>
 <script src="./angular.min.js"></script>
 <script src="./main.js"></script>

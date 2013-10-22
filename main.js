@@ -8,8 +8,16 @@ $(document).ready(function() {
     $('body').css('background-color','#'+bgColor);
     setTimeout(updateBg,500);
   };
-  setTimeout(updateBg,500);
+  //setTimeout(updateBg,500);
 });
+
+function GlobalCtrl($scope) {
+  $scope.isGridVisible = false;
+
+  $scope.toggleGrid = function() {
+    $scope.isGridVisible = !($scope.isGridVisible);
+  }
+}
 
 function initGrid(grid, height, width) {
   for(var i = 0; i < height; i++) {

@@ -26,3 +26,7 @@
   background-color: #AAA;
 }
 
+footer {
+    position: fixed;
+    bottom: 0;
+}
