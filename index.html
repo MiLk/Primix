@@ -4,14 +4,21 @@
   <title>Primix</title>
   <link rel="stylesheet" href="./main.css" />
 </head>
-<body>
+<body ng-app>
 <div class="form">
   <input type="text" name="number" size="40"/>
 </div>
-<div class="grid">
+<div class="grid" ng-controller="GridCtrl">
+  <div class="row row{{ $index }}" ng-repeat="row in grid">
+    <div class="cell col{{ $index }}'" ng-repeat="cell in row"
+         ng-click="$parent.$parent.onCellClick(cell.row,cell.col)"
+         ng-class="{active: cell.active}">
 
+    </div>
+  </div>
 </div>
 <script src="./jquery-2.0.3.min.js"></script>
+<script src="./angular.min.js"></script>
 <script src="./main.js"></script>
 </body>
 </html>
