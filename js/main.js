@@ -37,3 +37,5 @@ function GridCtrl($scope) {
     $scope.grid[row][col].active = !($scope.grid[row][col].active);
   }
 }
+
+Prime.decompose(30);
