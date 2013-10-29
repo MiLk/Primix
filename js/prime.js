@@ -7,7 +7,7 @@ var Prime = function() {
 Prime.prototype.primeArray = [2,3,5,7,11];
 Prime.prototype.primeDecomposition = [];
 
-Prime.prototype.decompose = function(n) {
+Prime.prototype.getPrimeDecomposition = function(n) {
     var upperLimit = Math.sqrt(n);
     var currentPrimeIndex = 0;
     
@@ -27,6 +27,8 @@ Prime.prototype.decompose = function(n) {
     
     console.log('n = ' + this.primeDecomposition.join(' * '));
 };
+
+
 
 this.Prime = new Prime();
 
