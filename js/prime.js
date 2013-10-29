@@ -53,7 +53,7 @@ Prime.prototype.getPrimeDecompositionIndexes = function() {
 
 Prime.prototype.generatePrimeList = function(n) {
   var tmpPrimeList = [2];
-  for(var i = 3; i <= n; i+=2) {
+  for(var i = 3; i <= n; i += 2) {
     var nb = i;
     var currentIndex = 0
     while(tmpPrimeList[currentIndex] <= Math.sqrt(nb)) {

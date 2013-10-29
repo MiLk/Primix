@@ -35,7 +35,7 @@ function GlobalCtrl($scope) {
     var totalLen = $scope.number.length;
     var tmpNumber = $scope.number;
     for(var i = 0; i < n; ++i) {
-      var iLength = Math.floor(totalLen / (n-i));
+      var iLength = Math.floor(totalLen / (n - i));
       Prime.decompose(tmpNumber.substr(0, iLength));
       
       var primeArray = Prime.getPrimeDecomposition();
@@ -48,15 +48,15 @@ function GlobalCtrl($scope) {
     }
     
     console.log('primeArrays = ' + $scope.primeArrays.join(' * '));
-    console.log('Indexes      = ' + $scope.primeArraysIndexes.join(' * '));
+    console.log('Indexes     = ' + $scope.primeArraysIndexes.join(' * '));
   }
   
 }
 
 function initGrid(grid, height, width) {
-  for(var i = 0; i < height; i++) {
+  for(var i = 0; i < height; ++i) {
     var row = [];
-    for(var j = 0; j < width; j++) {
+    for(var j = 0; j < width; ++j) {
       row.push({ row: i, col: j, active: false });
     }
     grid.push(row);
