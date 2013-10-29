@@ -18,8 +18,12 @@ Prime.prototype.decompose = function(n) {
   
   while(n !== 1 && this.primeArray[currentPrimeIndex] <= upperLimit) {
     if((n % this.primeArray[currentPrimeIndex]) === 0) {
-      this.primeDecomposition.push(this.primeArray[currentPrimeIndex]);
-      this.primeDecompositionIndexes.push(currentPrimeIndex);
+      
+      // Avoid duplicated values
+      if(this.primeDecomposition.indexOf(this.primeArray[currentPrimeIndex]) == -1) {
+        this.primeDecomposition.push(this.primeArray[currentPrimeIndex]);
+        this.primeDecompositionIndexes.push(currentPrimeIndex);
+      }
       n = n / this.primeArray[currentPrimeIndex];
       upperLimit = Math.sqrt(n);
       currentPrimeIndex = 0;
@@ -27,9 +31,14 @@ Prime.prototype.decompose = function(n) {
       ++currentPrimeIndex;
     }
   }
-  if(n !== 1) {
+  
+  if(n != 1 && this.primeDecomposition.indexOf(n) == -1) {
+    console.log('bonus');
     this.primeDecomposition.push(n);
+    console.log('indexOf(' + n + ') = ' + this.primeArray.indexOf(parseInt(n)));
+    this.primeDecompositionIndexes.push(this.primeArray.indexOf(parseInt(n)));
   }
+  
   
   //console.log('n = ' + this.primeDecomposition.join(' * '));
 };

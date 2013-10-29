@@ -13,8 +13,8 @@ $(document).ready(function() {
 
 function GlobalCtrl($scope) {
   $scope.isGridVisible = false;
-  $scope.primesArrays  = [];
-  $scope.primesArraysIndexes = [];
+  $scope.primeArrays  = [];
+  $scope.primeArraysIndexes = [];
 
   $scope.toggleGrid = function() {
     $scope.isGridVisible = !($scope.isGridVisible);
@@ -29,7 +29,8 @@ function GlobalCtrl($scope) {
    */
   $scope.decompose = function(n) {
     // reset
-    $scope.primesArrays = [];
+    $scope.primeArrays = [];
+    $scope.primeArraysIndexes = [];
     
     var totalLen = $scope.number.length;
     var tmpNumber = $scope.number;
@@ -39,14 +40,15 @@ function GlobalCtrl($scope) {
       
       var primeArray = Prime.getPrimeDecomposition();
       var primeArrayIndexes = Prime.getPrimeDecompositionIndexes();
-      $scope.primesArrays.push(primeArray);
-      $scope.primesArraysIndexes.push(primeArrayIndexes);
+      $scope.primeArrays.push(primeArray);
+      $scope.primeArraysIndexes.push(primeArrayIndexes);
       
       totalLen = totalLen-iLength;
       tmpNumber = tmpNumber.substr(iLength, totalLen);
     }
     
-    console.log('primesArrays = ' + $scope.primesArrays.join(' * '));
+    console.log('primeArrays = ' + $scope.primeArrays.join(' * '));
+    console.log('Indexes      = ' + $scope.primeArraysIndexes.join(' * '));
   }
   
 }
