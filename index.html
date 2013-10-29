@@ -12,7 +12,7 @@
     <input type="text" ng-model="number" size="40" ng-model-onblur ng-change="onInputChange()"/>
   </form>
   <pre>form = {{number | json}}</pre>
-  <pre>numbersArray = {{numbersArray | json}}</pre>
+  <pre>primesArrays = {{primesArrays | json}}</pre>
 </div>
 <div class="grid" ng-controller="GridCtrl" ng-show="$parent.isGridVisible">
   <div class="row row{{ $index }}" ng-repeat="row in grid">
