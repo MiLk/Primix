@@ -22,7 +22,6 @@ function GlobalCtrl($scope) {
   
   $scope.onInputChange = function() {
     $scope.decompose(8);
-    console.log("Changed.");
   }
   
   /*
@@ -33,7 +32,6 @@ function GlobalCtrl($scope) {
     $scope.primesArrays = [];
     
     var totalLen = $scope.number.length;
-    console.log('$scope.number = ' + $scope.number);
     var tmpNumber = $scope.number;
     for(var i = 0; i < n; ++i) {
       var iLength = Math.floor(totalLen / (n-i));
