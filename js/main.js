@@ -87,7 +87,14 @@ function initIndexes(array, height, width) {
   for(var i = 0; i < height; ++i) {
     array[i] = [];
     for(var j = 0; j < width; ++j) {
-      array[i][(j-i)%height] = j;
+      //var offset = (j-i+height); // Regular repartition
+      var offset = height + Math.floor((height-1)/2);
+      if(i%2 == 0) {
+        offset += (j-(i/2));
+      } else {
+        offset += (j+((i+1)/2));
+      }
+      array[i][offset%height] = j;
     }
   }
 }
@@ -120,7 +127,6 @@ function GridCtrl($scope) {
   
   $scope.$on('UPDATE_GRID', function() {
     var arr = $scope.$parent.gridIndexArrays;
-    
     $scope.reset();
     for(var i = 0; i < arr.length; ++i) {
       for(var j = 0; j < arr[i].length; ++j) {
