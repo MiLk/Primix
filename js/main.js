@@ -89,12 +89,12 @@ function initIndexes(array, height, width) {
     for(var j = 0; j < width; ++j) {
       //var offset = (j-i+height); // Regular repartition
       var offset = 2*height + Math.floor((height-1)/2);
-      if(i%2 == 0) {
+      if(i%2 === 0) {
         offset += (j-(i/2));
       } else {
         offset += (j+((i+1)/2));
       }
-      if(j%2 == 0) {
+      if(j%2 === 0) {
         offset -= (j/2)*3;
       } else {
         offset -= ((j-1)/2);
