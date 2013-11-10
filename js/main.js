@@ -88,13 +88,18 @@ function initIndexes(array, height, width) {
     array[i] = [];
     for(var j = 0; j < width; ++j) {
       //var offset = (j-i+height); // Regular repartition
-      var offset = height + Math.floor((height-1)/2);
+      var offset = 2*height + Math.floor((height-1)/2);
       if(i%2 == 0) {
         offset += (j-(i/2));
       } else {
         offset += (j+((i+1)/2));
       }
-      array[i][offset%height] = j;
+      if(j%2 == 0) {
+        offset -= (j/2)*3;
+      } else {
+        offset -= ((j-1)/2);
+      }
+      array[i][j] = offset%height;
     }
   }
 }
@@ -130,7 +135,7 @@ function GridCtrl($scope) {
     $scope.reset();
     for(var i = 0; i < arr.length; ++i) {
       for(var j = 0; j < arr[i].length; ++j) {
-        console.log('enable ' + i + ',' + $scope.gridIndexes[i][arr[i][j]]);
+        console.log('* enable ' + i + ',' + arr[i][j] + ' => ' + i + ',' + $scope.gridIndexes[i][arr[i][j]]);
         $scope.enable(i, $scope.gridIndexes[i][arr[i][j]]);
       }
     }
