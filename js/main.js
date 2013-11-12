@@ -112,6 +112,7 @@ function GridCtrl($scope) {
 
   $scope.onCellClick = function(row,col) {
     $scope.grid[row][col].active = !($scope.grid[row][col].active);
+    recompose();
   };
   
   $scope.reset = function() {
@@ -129,6 +130,40 @@ function GridCtrl($scope) {
   $scope.disable = function(x, y) {
     $scope.grid[y][x].active = false;
   };
+
+  var recompose = function() {
+    var maxLength = 0;
+    var columnValues = []; // Values computed for each column
+    
+    // Compute the prime number recomposition for each column
+    for(var i = 0 ; i < $scope.grid.length ; ++i) {
+        var columnValue = 1;
+        for(var j = 0 ; j < $scope.grid[i].length ; ++j) {
+            if($scope.grid[i][j].active) {
+                columnValue *= $scope.grid[i][j];
+            }
+        }
+        columnValues[i] = columnValue;
+        if(columnValue.length > maxLength) {
+            maxLength = columnValue.length;
+        }
+    }
+    
+    // Add zeros to smaller numbers
+    for(i = 0 ; i < columnValues.length ; ++i) {
+        for(var n = columnValues[i].length ; n < maxLength ; ++n) {
+            columnValues[i] = "0" + columnValues[i];
+        }
+    }
+    
+    // Concatenate all the computed values
+    var globalNumber = "";
+    for(i = 0 ; i < columnValues.length ; ++i) {
+        globalNumber += columnValues[i];   
+    }
+    
+    $scope.$parent.number = globalNumber;
+  }
   
   $scope.$on('UPDATE_GRID', function() {
     var arr = $scope.$parent.gridIndexArrays;
