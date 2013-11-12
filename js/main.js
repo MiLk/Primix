@@ -16,6 +16,7 @@ function GlobalCtrl($scope) {
   $scope.primeArrays  = [];
   $scope.primeArraysIndexes = [];
   $scope.gridIndexArrays = [];
+  $scope.period = 1000;
 
   $scope.toggleGrid = function() {
     $scope.isGridVisible = !($scope.isGridVisible);
@@ -175,5 +176,12 @@ function GridCtrl($scope) {
       }
     }
   });
+
+  var update = function() {
+    // Your code
+    setTimeout(update, $scope.$parent.period); // Call update() function every $scope.$parent.period ms
+  };
+  setTimeout(update, 0); // Call update() asap
+
 }
 
