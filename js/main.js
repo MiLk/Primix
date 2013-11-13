@@ -160,38 +160,41 @@ function GridCtrl($scope) {
   $scope.disable = function(x, y) {
     $scope.grid[y][x].active = false;
   };
-
+  
   var recompose = function() {
-    var maxLength = 0;
+    var maxLength    = 0;
     var columnValues = []; // Values computed for each column
     
     // Compute the prime number recomposition for each column
     for(var i = 0 ; i < $scope.grid.length ; ++i) {
         var columnValue = 1;
         for(var j = 0 ; j < $scope.grid[i].length ; ++j) {
-            if($scope.grid[i][j].active) {
-                columnValue *= Prime.primeArray[$scope.gridIndexes[i][j]];
-            }
+          if($scope.grid[j][i].active) {
+            var index = $scope.gridIndexes[i].indexOf(j);
+            console.log("(" + j + ";" + i + ") indexOf(" + j + ") => index = " + index + " => prime = " + Prime.primeArray[index]);
+            columnValue *= Prime.primeArray[index];
+          }
             //console.log("(" + i + ";" + j + ") " + Prime.primeArray[$scope.gridIndexes[i][j]]);
         }
+        
         columnValues[i] = columnValue;
         if(columnValue.length > maxLength) {
-            maxLength = columnValue.length;
+          maxLength = columnValue.length;
         }
         //console.log("column " + i + " : " + columnValue);
     }
     
     // Add zeros to smaller numbers
     for(i = 0 ; i < columnValues.length ; ++i) {
-        for(var n = columnValues[i].length ; n < maxLength ; ++n) {
-            columnValues[i] = "0" + columnValues[i];
-        }
+      for(var n = columnValues[i].length ; n < maxLength ; ++n) {
+        columnValues[i] = "0" + columnValues[i];
+      }
     }
     
     // Concatenate all the computed values
     var globalNumber = "";
     for(i = 0 ; i < columnValues.length ; ++i) {
-        globalNumber += columnValues[i];   
+      globalNumber += columnValues[i];   
     }
     
     $scope.$parent.number = globalNumber;
