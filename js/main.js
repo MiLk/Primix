@@ -170,13 +170,15 @@ function GridCtrl($scope) {
         var columnValue = 1;
         for(var j = 0 ; j < $scope.grid[i].length ; ++j) {
             if($scope.grid[i][j].active) {
-                columnValue *= $scope.grid[i][j];
+                columnValue *= Prime.primeArray[$scope.gridIndexes[i][j]];
             }
+            //console.log("(" + i + ";" + j + ") " + Prime.primeArray[$scope.gridIndexes[i][j]]);
         }
         columnValues[i] = columnValue;
         if(columnValue.length > maxLength) {
             maxLength = columnValue.length;
         }
+        //console.log("column " + i + " : " + columnValue);
     }
     
     // Add zeros to smaller numbers
@@ -193,7 +195,7 @@ function GridCtrl($scope) {
     }
     
     $scope.$parent.number = globalNumber;
-  }
+  };
   
   /*
    * Function called when receiving an 'UPDATE_GRID' message
