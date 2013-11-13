@@ -12,30 +12,57 @@ $(document).ready(function() {
 });
 
 function GlobalCtrl($scope) {
-  $scope.isGridVisible = false;
+  
+  // Scope variables
+  // -------------------------------------
+  //
+  // Is the grid visible ?
+  $scope.isGridVisible = false
+  
+  // Contains X subarrays with the prime decomposition on each column
   $scope.primeArrays  = [];
+  
+  // Contains X subarrays with the indexes of the prime numbers 
+  // of $scope.primeArrays in Prime.primeArray
+  // For instance, if $scope.primeArrays is [[2], [3,7]]
+  // then primeArraysIndexes should be [[0], [1,3]]
   $scope.primeArraysIndexes = [];
-  $scope.gridIndexArrays = [];
+  
+  // gridIndexArrays is close to primeArraysIndexes
+  // It contains the indexes modulo the height of the grid.
+  // Moreover, there is no double in the subarrays.
+  $scope.gridIndexArrays
+  
+  // Period of 1 note.
   $scope.period = 1000;
+  
+  // -------------------------------------
+  
+  
 
   $scope.toggleGrid = function() {
     $scope.isGridVisible = !($scope.isGridVisible);
   };
   
+  /*
+   * Callback function of the form input.
+   */
   $scope.onInputChange = function() {
     $scope.decompose(8);
     $scope.fillGrid(8);
   };
   
   /*
-   * decompose number in n subnumbers
+   * Decomposes a string in n substrings of equal length
+   * If this is not strictly possible, the substrings of the end
+   * are 1 character longer.
    */
   $scope.decompose = function(n) {
     // reset
     $scope.primeArrays = [];
     $scope.primeArraysIndexes = [];
     
-    var totalLen = $scope.number.length;
+    var totalLen  = $scope.number.length;
     var tmpNumber = $scope.number;
     for(var i = 0; i < n; ++i) {
       var iLength = Math.floor(totalLen / (n - i));
@@ -59,7 +86,7 @@ function GlobalCtrl($scope) {
     for(var i = 0; i < $scope.primeArraysIndexes.length; ++i) {
       $scope.gridIndexArrays[i] = [];
       for(var j = 0; j < $scope.primeArraysIndexes[i].length; ++j) {
-        // Avoid duplicated values
+        // Avoids duplicated values and applies a modulo
         if($scope.primeArraysIndexes[i][j] != -1
         && $scope.gridIndexArrays[i].indexOf($scope.primeArraysIndexes[i][j] % height) == -1) {
           $scope.gridIndexArrays[i].push($scope.primeArraysIndexes[i][j] % height);
@@ -69,6 +96,8 @@ function GlobalCtrl($scope) {
     
     console.log('%%Indexes%% = ' + $scope.gridIndexArrays.join(' * '));
     
+    // Broadcast to children for them to update themselves 
+    // regarding the new values in gridIndexArrays
     $scope.$broadcast('UPDATE_GRID');
   };
   
@@ -166,6 +195,10 @@ function GridCtrl($scope) {
     $scope.$parent.number = globalNumber;
   }
   
+  /*
+   * Function called when receiving an 'UPDATE_GRID' message
+   * Enables the grid boxes regarding $scope.$parent.gridIndexArrays
+   */
   $scope.$on('UPDATE_GRID', function() {
     var arr = $scope.$parent.gridIndexArrays;
     $scope.reset();
@@ -177,6 +210,10 @@ function GridCtrl($scope) {
     }
   });
 
+  /*
+   * Periodic method for the reading a column of the grid
+   * and play the associated sounds.
+   */
   var update = function() {
     // Your code
     setTimeout(update, $scope.$parent.period); // Call update() function every $scope.$parent.period ms
