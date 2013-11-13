@@ -171,30 +171,28 @@ function GridCtrl($scope) {
         for(var j = 0 ; j < $scope.grid[i].length ; ++j) {
           if($scope.grid[j][i].active) {
             var index = $scope.gridIndexes[i].indexOf(j);
-            console.log("(" + j + ";" + i + ") indexOf(" + j + ") => index = " + index + " => prime = " + Prime.primeArray[index]);
             columnValue *= Prime.primeArray[index];
           }
-            //console.log("(" + i + ";" + j + ") " + Prime.primeArray[$scope.gridIndexes[i][j]]);
+        }
+        
+        if(columnValue == 1) {
+            columnValue = 0;
         }
         
         columnValues[i] = columnValue;
-        if(columnValue.length > maxLength) {
-          maxLength = columnValue.length;
+        if(columnValue.toString().length > maxLength) {
+          maxLength = columnValue.toString().length;
         }
-        //console.log("column " + i + " : " + columnValue);
     }
     
-    // Add zeros to smaller numbers
-    for(i = 0 ; i < columnValues.length ; ++i) {
-      for(var n = columnValues[i].length ; n < maxLength ; ++n) {
-        columnValues[i] = "0" + columnValues[i];
-      }
-    }
-    
-    // Concatenate all the computed values
     var globalNumber = "";
     for(i = 0 ; i < columnValues.length ; ++i) {
-      globalNumber += columnValues[i];   
+      // Add zeros to smaller numbers
+      for(var n = columnValues[i].toString().length ; n < maxLength ; ++n) {
+        columnValues[i] = "0" + columnValues[i];
+      }
+      // Concatenate all the computed values
+      globalNumber += columnValues[i]; 
     }
     
     $scope.$parent.number = globalNumber;
