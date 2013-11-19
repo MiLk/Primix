@@ -1,3 +1,19 @@
+$.ionSound({
+    sounds: [
+        "0",
+		"1",
+		"2",
+		"3",
+		"4",
+		"5",
+		"6",
+		"7"
+   ]
+	path: "../sounds/",
+	multiPlay: true,               // playing only 1 sound at once
+    volume: "0.3"
+});
+
 $(document).ready(function() {
   // Background
   var updateBg = function() {
@@ -242,4 +258,5 @@ function GridCtrl($scope) {
   setTimeout(update, 0); // Call update() asap
 
 }
+
 
