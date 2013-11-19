@@ -201,14 +201,19 @@ function GridCtrl($scope) {
   
   // Plays the sounds and animations of column number i.
   var playColumn = function(colIdx) {
-    //console.log("Playing column " + colIdx);
+    console.log("Playing column " + colIdx);
     for(var i = 0 ; i < 8 ; ++i) {
       if($scope.grid[i][colIdx].active) {
         // Play sound (i, colIdx)
-        // Play animation (i, colIdx)
+        playAnimation(i, colIdx);
       }
     }
   };
+  
+  var playAnimation = function(rowIdx, colIdx) {
+    var primeIdx = $scope.gridIndexes[colIdx].indexOf(rowIdx);
+    console.log(primeIdx);
+  }
   
   /*
    * Function called when receiving an 'UPDATE_GRID' message
