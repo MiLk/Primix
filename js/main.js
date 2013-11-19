@@ -1,6 +1,6 @@
 $.ionSound({
-    sounds: [
-        "0",
+  sounds: [
+    "0",
 		"1",
 		"2",
 		"3",
@@ -8,10 +8,10 @@ $.ionSound({
 		"5",
 		"6",
 		"7"
-   ]
+  ],
 	path: "../sounds/",
 	multiPlay: true,               // playing only 1 sound at once
-    volume: "0.3"
+  volume: "0.3"
 });
 
 $(document).ready(function() {
