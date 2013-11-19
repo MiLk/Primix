@@ -52,9 +52,8 @@ function GlobalCtrl($scope) {
   // Period of 1 note.
   $scope.period = 1000;
   
-  // -------------------------------------
-  
-  
+  // ---------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   $scope.toggleGrid = function() {
     $scope.isGridVisible = !($scope.isGridVisible);
@@ -119,6 +118,11 @@ function GlobalCtrl($scope) {
   
 }
 
+// ---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
+// Initialization functions
+// 
+
 function initGrid(grid, height, width) {
   for(var i = 0; i < height; ++i) {
     var row = [];
@@ -149,6 +153,9 @@ function initIndexes(array, height, width) {
     }
   }
 }
+
+// ---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
 
 function GridCtrl($scope) {
   $scope.time = 0;
@@ -215,27 +222,6 @@ function GridCtrl($scope) {
     $scope.$parent.number = globalNumber;
   };
   
-  // Plays the sounds and animations of column number i.
-  var playColumn = function(colIdx) {
-    console.log("Playing column " + colIdx);
-    for(var i = 0 ; i < 8 ; ++i) {
-      if($scope.grid[i][colIdx].active) {
-        playSound(i);
-        playAnimation(i, colIdx);
-      }
-    }
-  };
-  
-  var playAnimation = function(rowIdx, colIdx) {
-    var primeIdx = $scope.gridIndexes[colIdx].indexOf(rowIdx);
-    //console.log(primeIdx);
-  };
-  
-  var playSound = function(rowIdx) {
-    console.log("play sound " + rowIdx);
-    $.ionSound.play(rowIdx.toString());
-  };
-  
   /*
    * Function called when receiving an 'UPDATE_GRID' message
    * Enables the grid boxes regarding $scope.$parent.gridIndexArrays
@@ -250,6 +236,35 @@ function GridCtrl($scope) {
       }
     }
   });
+  
+  // ---------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
+  // Functions called periodically to animate the grid / play the sounds
+  //
+  
+  
+  // Plays the sounds and animations of column number i.
+  var playColumn = function(colIdx) {
+    console.log("Playing column " + colIdx);
+    for(var i = 0 ; i < 8 ; ++i) {
+      if($scope.grid[i][colIdx].active) {
+        playSound(i);
+        playAnimation(i, colIdx);
+      }
+    }
+  };
+  
+  // Play the animation for 1 box
+  var playAnimation = function(rowIdx, colIdx) {
+    var primeIdx = $scope.gridIndexes[colIdx].indexOf(rowIdx);
+    //console.log(primeIdx);
+  };
+  
+  // Play the sound for 1 box
+  var playSound = function(rowIdx) {
+    console.log("play sound " + rowIdx);
+    $.ionSound.play(rowIdx.toString());
+  };
 
   /*
    * Periodic method for the reading a column of the grid
