@@ -151,6 +151,7 @@ function initIndexes(array, height, width) {
 }
 
 function GridCtrl($scope) {
+  $scope.time = 0;
   $scope.grid = [];
   $scope.gridIndexes = [];
   initGrid($scope.grid, 8, 8);
@@ -214,6 +215,17 @@ function GridCtrl($scope) {
     $scope.$parent.number = globalNumber;
   };
   
+  // Plays the sounds and animations of column number i.
+  var playColumn = function(colIdx) {
+    //console.log("Playing column " + colIdx);
+    for(var i = 0 ; i < 8 ; ++i) {
+      if($scope.grid[i][colIdx].active) {
+        // Play sound (i, colIdx)
+        // Play animation (i, colIdx)
+      }
+    }
+  };
+  
   /*
    * Function called when receiving an 'UPDATE_GRID' message
    * Enables the grid boxes regarding $scope.$parent.gridIndexArrays
@@ -234,7 +246,8 @@ function GridCtrl($scope) {
    * and play the associated sounds.
    */
   var update = function() {
-    // Your code
+    playColumn($scope.time++);
+    $scope.time %= 8;
     setTimeout(update, $scope.$parent.period); // Call update() function every $scope.$parent.period ms
   };
   setTimeout(update, 0); // Call update() asap
