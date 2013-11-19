@@ -217,9 +217,11 @@ function GridCtrl($scope) {
   
   // Plays the sounds and animations of column number i.
   var playColumn = function(colIdx) {
-    console.log("Playing column " + colIdx);
+    //console.log("Playing column " + colIdx);
     for(var i = 0 ; i < 8 ; ++i) {
       if($scope.grid[i][colIdx].active) {
+        // Change previously played column css
+        // Change playing column css
         // Play sound (i, colIdx)
         playAnimation(i, colIdx);
       }
@@ -228,7 +230,7 @@ function GridCtrl($scope) {
   
   var playAnimation = function(rowIdx, colIdx) {
     var primeIdx = $scope.gridIndexes[colIdx].indexOf(rowIdx);
-    console.log(primeIdx);
+    //console.log(primeIdx);
   }
   
   /*
