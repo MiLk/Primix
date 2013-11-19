@@ -1,15 +1,15 @@
 $.ionSound({
   sounds: [
     "0",
-		"1",
-		"2",
-		"3",
-		"4",
-		"5",
-		"6",
-		"7"
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7"
   ],
-	path: "../sounds/",
+	path: "sounds/",
 	multiPlay: true,               // playing only 1 sound at once
   volume: "1.0"
 });
@@ -233,7 +233,7 @@ function GridCtrl($scope) {
   
   var playSound = function(rowIdx) {
     console.log("play sound " + rowIdx);
-		$.ionSound.play("0");
+    $.ionSound.play(rowIdx.toString());
   };
   
   /*
