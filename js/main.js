@@ -220,7 +220,7 @@ function GridCtrl($scope) {
     console.log("Playing column " + colIdx);
     for(var i = 0 ; i < 8 ; ++i) {
       if($scope.grid[i][colIdx].active) {
-        // Play sound (i, colIdx)
+        playSound (i);
         playAnimation(i, colIdx);
       }
     }
@@ -229,7 +229,11 @@ function GridCtrl($scope) {
   var playAnimation = function(rowIdx, colIdx) {
     var primeIdx = $scope.gridIndexes[colIdx].indexOf(rowIdx);
     console.log(primeIdx);
-  }
+  };
+  
+  var playSound = function(rowIdx) {
+		$.ionSound.play(rowIdx.toString());
+  };
   
   /*
    * Function called when receiving an 'UPDATE_GRID' message
