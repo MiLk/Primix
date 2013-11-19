@@ -1,5 +1,14 @@
-.form, .grid {
+html body {
+  background-color: #000; 
   text-align: center;
+}
+
+.instructions {
+  color: #fff;
+  margin-top: 10%;
+}
+
+.form, .grid {
   margin: 0 auto;
 }
 

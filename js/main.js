@@ -1,17 +1,17 @@
 $.ionSound({
-    sounds: [
-        "0",
-		"1",
-		"2",
-		"3",
-		"4",
-		"5",
-		"6",
-		"7"
-   ]
-	path: "../sounds/",
+  sounds: [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7"
+  ],
+	path: "sounds/",
 	multiPlay: true,               // playing only 1 sound at once
-    volume: "0.3"
+  volume: "1.0"
 });
 
 $(document).ready(function() {
@@ -52,9 +52,8 @@ function GlobalCtrl($scope) {
   // Period of 1 note.
   $scope.period = 1000;
   
-  // -------------------------------------
-  
-  
+  // ---------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   $scope.toggleGrid = function() {
     $scope.isGridVisible = !($scope.isGridVisible);
@@ -119,6 +118,11 @@ function GlobalCtrl($scope) {
   
 }
 
+// ---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
+// Initialization functions
+// 
+
 function initGrid(grid, height, width) {
   for(var i = 0; i < height; ++i) {
     var row = [];
@@ -149,6 +153,9 @@ function initIndexes(array, height, width) {
     }
   }
 }
+
+// ---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
 
 function GridCtrl($scope) {
   $scope.time = 0;
@@ -184,22 +191,22 @@ function GridCtrl($scope) {
     
     // Compute the prime number recomposition for each column
     for(var i = 0 ; i < $scope.grid.length ; ++i) {
-        var columnValue = 1;
-        for(var j = 0 ; j < $scope.grid[i].length ; ++j) {
-          if($scope.grid[j][i].active) {
-            var index = $scope.gridIndexes[i].indexOf(j);
-            columnValue *= Prime.primeArray[index];
-          }
+      var columnValue = 1;
+      for(var j = 0 ; j < $scope.grid[i].length ; ++j) {
+        if($scope.grid[j][i].active) {
+          var index = $scope.gridIndexes[i].indexOf(j);
+          columnValue *= Prime.primeArray[index];
         }
-        
-        if(columnValue == 1) {
-            columnValue = 0;
-        }
-        
-        columnValues[i] = columnValue;
-        if(columnValue.toString().length > maxLength) {
-          maxLength = columnValue.toString().length;
-        }
+      }
+      
+      if(columnValue == 1) {
+          columnValue = 0;
+      }
+      
+      columnValues[i] = columnValue;
+      if(columnValue.toString().length > maxLength) {
+        maxLength = columnValue.toString().length;
+      }
     }
     
     var globalNumber = "";
@@ -242,11 +249,40 @@ function GridCtrl($scope) {
     $scope.reset();
     for(var i = 0; i < arr.length; ++i) {
       for(var j = 0; j < arr[i].length; ++j) {
-        console.log('* enable ' + i + ',' + arr[i][j] + ' => ' + i + ',' + $scope.gridIndexes[i][arr[i][j]]);
+        //console.log('* enable ' + i + ',' + arr[i][j] + ' => ' + i + ',' + $scope.gridIndexes[i][arr[i][j]]);
         $scope.enable(i, $scope.gridIndexes[i][arr[i][j]]);
       }
     }
   });
+  
+  // ---------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
+  // Functions called periodically to animate the grid / play the sounds
+  //
+  
+  
+  // Plays the sounds and animations of column number i.
+  var playColumn = function(colIdx) {
+    console.log("Playing column " + colIdx);
+    for(var i = 0 ; i < 8 ; ++i) {
+      if($scope.grid[i][colIdx].active) {
+        playSound(i);
+        playAnimation(i, colIdx);
+      }
+    }
+  };
+  
+  // Play the animation for 1 box
+  var playAnimation = function(rowIdx, colIdx) {
+    var primeIdx = $scope.gridIndexes[colIdx].indexOf(rowIdx);
+    //console.log(primeIdx);
+  };
+  
+  // Play the sound for 1 box
+  var playSound = function(rowIdx) {
+    console.log("play sound " + rowIdx);
+    $.ionSound.play(rowIdx.toString());
+  };
 
   /*
    * Periodic method for the reading a column of the grid
