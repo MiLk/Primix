@@ -11,7 +11,7 @@ $.ionSound({
   ],
 	path: "../sounds/",
 	multiPlay: true,               // playing only 1 sound at once
-  volume: "0.3"
+  volume: "1.0"
 });
 
 $(document).ready(function() {
@@ -184,22 +184,22 @@ function GridCtrl($scope) {
     
     // Compute the prime number recomposition for each column
     for(var i = 0 ; i < $scope.grid.length ; ++i) {
-        var columnValue = 1;
-        for(var j = 0 ; j < $scope.grid[i].length ; ++j) {
-          if($scope.grid[j][i].active) {
-            var index = $scope.gridIndexes[i].indexOf(j);
-            columnValue *= Prime.primeArray[index];
-          }
+      var columnValue = 1;
+      for(var j = 0 ; j < $scope.grid[i].length ; ++j) {
+        if($scope.grid[j][i].active) {
+          var index = $scope.gridIndexes[i].indexOf(j);
+          columnValue *= Prime.primeArray[index];
         }
-        
-        if(columnValue == 1) {
-            columnValue = 0;
-        }
-        
-        columnValues[i] = columnValue;
-        if(columnValue.toString().length > maxLength) {
-          maxLength = columnValue.toString().length;
-        }
+      }
+      
+      if(columnValue == 1) {
+          columnValue = 0;
+      }
+      
+      columnValues[i] = columnValue;
+      if(columnValue.toString().length > maxLength) {
+        maxLength = columnValue.toString().length;
+      }
     }
     
     var globalNumber = "";
@@ -220,7 +220,7 @@ function GridCtrl($scope) {
     console.log("Playing column " + colIdx);
     for(var i = 0 ; i < 8 ; ++i) {
       if($scope.grid[i][colIdx].active) {
-        playSound (i);
+        playSound(i);
         playAnimation(i, colIdx);
       }
     }
@@ -228,11 +228,12 @@ function GridCtrl($scope) {
   
   var playAnimation = function(rowIdx, colIdx) {
     var primeIdx = $scope.gridIndexes[colIdx].indexOf(rowIdx);
-    console.log(primeIdx);
+    //console.log(primeIdx);
   };
   
   var playSound = function(rowIdx) {
-		$.ionSound.play(rowIdx.toString());
+    console.log("play sound " + rowIdx);
+		$.ionSound.play("0");
   };
   
   /*
@@ -244,7 +245,7 @@ function GridCtrl($scope) {
     $scope.reset();
     for(var i = 0; i < arr.length; ++i) {
       for(var j = 0; j < arr[i].length; ++j) {
-        console.log('* enable ' + i + ',' + arr[i][j] + ' => ' + i + ',' + $scope.gridIndexes[i][arr[i][j]]);
+        //console.log('* enable ' + i + ',' + arr[i][j] + ' => ' + i + ',' + $scope.gridIndexes[i][arr[i][j]]);
         $scope.enable(i, $scope.gridIndexes[i][arr[i][j]]);
       }
     }
