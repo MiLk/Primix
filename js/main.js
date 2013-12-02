@@ -10,7 +10,7 @@ $.ionSound({
     "7"
   ],
 	path: "sounds/",
-	multiPlay: true,               // playing only 1 sound at once
+	multiPlay: true,  // Allows playing multiple sounds at the same time.
   volume: "1.0"
 });
 
@@ -33,7 +33,7 @@ function GlobalCtrl($scope) {
   // -------------------------------------
   //
   // Is the grid visible ?
-  $scope.isGridVisible = false
+  $scope.isGridVisible = false;
   
   // Contains X subarrays with the prime decomposition on each column
   $scope.primeArrays  = [];
@@ -221,24 +221,6 @@ function GridCtrl($scope) {
     
     $scope.$parent.number = globalNumber;
   };
-  
-  // Plays the sounds and animations of column number i.
-  var playColumn = function(colIdx) {
-    //console.log("Playing column " + colIdx);
-    for(var i = 0 ; i < 8 ; ++i) {
-      if($scope.grid[i][colIdx].active) {
-        // Change previously played column css
-        // Change playing column css
-        // Play sound (i, colIdx)
-        playAnimation(i, colIdx);
-      }
-    }
-  };
-  
-  var playAnimation = function(rowIdx, colIdx) {
-    var primeIdx = $scope.gridIndexes[colIdx].indexOf(rowIdx);
-    //console.log(primeIdx);
-  }
   
   /*
    * Function called when receiving an 'UPDATE_GRID' message
