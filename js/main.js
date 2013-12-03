@@ -185,6 +185,14 @@ function GridCtrl($scope) {
     $scope.grid[y][x].active = false;
   };
   
+  $scope.isCellVisible = function(row,col) {
+    return $scope.grid[row][col].active && ($scope.time == col);
+  };
+  
+  $scope.getPrimeNumberForCell = function(row, col) {
+    return Prime.primeArray[$scope.gridIndexes[col].indexOf(row)];
+  }
+  
   var recompose = function() {
     var maxLength    = 0;
     var columnValues = []; // Values computed for each column
@@ -245,7 +253,7 @@ function GridCtrl($scope) {
   
   // Plays the sounds and animations of column number i.
   var playColumn = function(colIdx) {
-    console.log("Playing column " + colIdx);
+    //console.log("Playing column " + colIdx);
     for(var i = 0 ; i < 8 ; ++i) {
       if($scope.grid[i][colIdx].active) {
         playSound(i);
@@ -257,6 +265,7 @@ function GridCtrl($scope) {
   // Play the animation for 1 box
   var playAnimation = function(rowIdx, colIdx) {
     var primeIdx = $scope.gridIndexes[colIdx].indexOf(rowIdx);
+    
     //console.log(primeIdx);
   };
   
@@ -271,8 +280,10 @@ function GridCtrl($scope) {
    * and play the associated sounds.
    */
   var update = function() {
-    playColumn($scope.time++);
-    $scope.time %= 8;
+    playColumn($scope.time);
+    $scope.$digest();
+    
+    $scope.time = ($scope.time + 1) % 8;
     setTimeout(update, $scope.$parent.period); // Call update() function every $scope.$parent.period ms
   };
   setTimeout(update, 0); // Call update() asap
