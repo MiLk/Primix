@@ -32,11 +32,11 @@ html body {
 }
 
 .cell:hover, .cell.active:hover {
-  background-color: #666;
+  background-color: #333;
 }
 
 .cell.active {
-  background-color: #AAA;
+  background-color: #888;
 }
 
 #bar {
