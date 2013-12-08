@@ -23,8 +23,8 @@ html body {
 }
 
 .cell {
-  margin: 2px;
-  border: #222 1px solid;
+  margin: 4px;
+  outline: #222 1px solid;
   background-color: #DDD;
   display: inline-block;
   width: 32px;

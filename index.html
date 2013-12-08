@@ -17,7 +17,7 @@
 </div>
 <div class="grid" ng-controller="GridCtrl" ng-show="$parent.isGridVisible">
   <div class="row row{{ $index }}" ng-repeat="row in grid">
-    <div class="cell col{{ $index }}'" ng-repeat="cell in row"
+    <div class="cell col{{ $index }}" ng-repeat="cell in row"
          ng-click="$parent.$parent.onCellClick(cell.row,cell.col)"
          ng-class="{active: cell.active}">
       <span ng-show="$parent.$parent.isCellVisible(cell.row, cell.col)">{{ $parent.$parent.getPrimeNumberForCell(cell.row, cell.col) }}</span>
