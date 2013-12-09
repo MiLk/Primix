@@ -21,6 +21,7 @@
          ng-click="$parent.$parent.onCellClick(cell.row,cell.col)"
          ng-class="{active: cell.active}">
       <span ng-show="$parent.$parent.isCellVisible(cell.row, cell.col)">{{ $parent.$parent.getPrimeNumberForCell(cell.row, cell.col) }}</span>
+      <span ng-hide="$parent.$parent.isCellVisible(cell.row, cell.col)">&nbsp;</span>
     </div>
   </div>
 </div>

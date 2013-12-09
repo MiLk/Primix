@@ -39,6 +39,15 @@ html body {
   background-color: #888;
 }
 
+.cell span {
+  display: inline-block;
+  margin: 4px;
+  font-size: 18px;
+  text-align: center;
+  color: #EEE;
+  font-weight: bold;
+}
+
 #bar {
   position: absolute;
   height: 100%;
