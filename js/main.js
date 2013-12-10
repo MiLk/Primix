@@ -52,6 +52,9 @@ function GlobalCtrl($scope) {
   // Period of 1 note.
   $scope.period = 1000;
   
+  // Number of beats
+  $scope.beats = 8;
+  
   // ---------------------------------------------------------------------------
   // ---------------------------------------------------------------------------
 
@@ -63,7 +66,7 @@ function GlobalCtrl($scope) {
    * Callback function of the form input.
    */
   $scope.onInputChange = function() {
-    $scope.decompose(8);
+    $scope.decompose($scope.beats);
     $scope.fillGrid(8);
   };
   
@@ -92,8 +95,8 @@ function GlobalCtrl($scope) {
       tmpNumber = tmpNumber.substr(iLength, totalLen);
     }
     
-    console.log('primeArrays = ' + $scope.primeArrays.join(' * '));
-    console.log('Indexes     = ' + $scope.primeArraysIndexes.join(' * '));
+    //console.log('primeArrays = ' + $scope.primeArrays.join(' * '));
+    //console.log('Indexes     = ' + $scope.primeArraysIndexes.join(' * '));
   };
   
   $scope.fillGrid = function(height) {
@@ -109,8 +112,6 @@ function GlobalCtrl($scope) {
       }
     }
     
-    console.log('%%Indexes%% = ' + $scope.gridIndexArrays.join(' * '));
-    
     // Broadcast to children for them to update themselves 
     // regarding the new values in gridIndexArrays
     $scope.$broadcast('UPDATE_GRID');
@@ -124,32 +125,32 @@ function GlobalCtrl($scope) {
 // 
 
 function initGrid(grid, height, width) {
-  for(var i = 0; i < height; ++i) {
+  for(var rowIdx = 0; rowIdx < height; ++rowIdx) {
     var row = [];
-    for(var j = 0; j < width; ++j) {
-      row.push({ row: i, col: j, active: false });
+    for(var colIdx = 0; colIdx < width; ++colIdx) {
+      row.push({ row: rowIdx, col: colIdx, active: false });
     }
     grid.push(row);
   }
 }
 
 function initIndexes(array, height, width) {
-  for(var i = 0; i < height; ++i) {
-    array[i] = [];
-    for(var j = 0; j < width; ++j) {
+  for(var colIdx = 0; colIdx < width; ++colIdx) {
+    array[colIdx] = [];
+    for(var rowIdx = 0; rowIdx < height; ++rowIdx) {
       //var offset = (j-i+height); // Regular repartition
       var offset = 2*height + Math.floor((height-1)/2);
-      if(i%2 === 0) {
-        offset += (j-(i/2));
+      if(colIdx%2 === 0) {
+        offset += (rowIdx-(colIdx/2));
       } else {
-        offset += (j+((i+1)/2));
+        offset += (rowIdx+((colIdx+1)/2));
       }
-      if(j%2 === 0) {
-        offset -= (j/2)*3;
+      if(rowIdx%2 === 0) {
+        offset -= (rowIdx/2)*3;
       } else {
-        offset -= ((j-1)/2);
+        offset -= ((rowIdx-1)/2);
       }
-      array[i][j] = offset%height;
+      array[colIdx][rowIdx] = offset%height;
     }
   }
 }
@@ -159,10 +160,10 @@ function initIndexes(array, height, width) {
 
 function GridCtrl($scope) {
   $scope.time = 0;
-  $scope.grid = [];
+  $scope.grid = []; // This is the only [row][col] array in this file !
   $scope.gridIndexes = [];
-  initGrid($scope.grid, 8, 8);
-  initIndexes($scope.gridIndexes, 8, 8);
+  initGrid($scope.grid, 8, $scope.beats);
+  initIndexes($scope.gridIndexes, 8, $scope.beats);
 
   $scope.onCellClick = function(row,col) {
     $scope.grid[row][col].active = !($scope.grid[row][col].active);
@@ -170,27 +171,27 @@ function GridCtrl($scope) {
   };
   
   $scope.reset = function() {
-    for(var i = 0; i < $scope.grid.length; ++i) {
-      for(var j = 0; j < $scope.grid[i].length; ++j) {
-        this.disable(i, j);
+    for(var rowIdx = 0; rowIdx < $scope.grid.length; ++rowIdx) {
+      for(var colIdx = 0; colIdx < $scope.grid[rowIdx].length; ++colIdx) {
+        this.disable(colIdx, rowIdx);
       }
     }
   };
   
-  $scope.enable = function(x, y) {
-    $scope.grid[y][x].active = true;
+  $scope.enable = function(colIdx, rowIdx) {
+    $scope.grid[rowIdx][colIdx].active = true;
   };
   
-  $scope.disable = function(x, y) {
-    $scope.grid[y][x].active = false;
+  $scope.disable = function(colIdx, rowIdx) {
+    $scope.grid[rowIdx][colIdx].active = false;
   };
   
-  $scope.isCellVisible = function(row,col) {
-    return $scope.grid[row][col].active && ($scope.time == col);
+  $scope.isCellVisible = function(rowIdx, colIdx) {
+    return $scope.grid[rowIdx][colIdx].active && ($scope.time == colIdx);
   };
   
-  $scope.getPrimeNumberForCell = function(row, col) {
-    return Prime.primeArray[$scope.gridIndexes[col].indexOf(row)];
+  $scope.getPrimeNumberForCell = function(rowIdx, colIdx) {
+    return Prime.primeArray[$scope.gridIndexes[colIdx].indexOf(rowIdx)];
   }
   
   var recompose = function() {
@@ -198,11 +199,11 @@ function GridCtrl($scope) {
     var columnValues = []; // Values computed for each column
     
     // Compute the prime number recomposition for each column
-    for(var i = 0 ; i < $scope.grid.length ; ++i) {
+    for(var rowIdx = 0 ; rowIdx < $scope.grid.length ; ++rowIdx) {
       var columnValue = 1;
-      for(var j = 0 ; j < $scope.grid[i].length ; ++j) {
-        if($scope.grid[j][i].active) {
-          var index = $scope.gridIndexes[i].indexOf(j);
+      for(var colIdx = 0 ; colIdx < $scope.grid[rowIdx].length ; ++colIdx) {
+        if($scope.grid[rowIdx][colIdx].active) {
+          var index = $scope.gridIndexes[colIdx].indexOf(rowIdx);
           columnValue *= Prime.primeArray[index];
         }
       }
@@ -218,7 +219,7 @@ function GridCtrl($scope) {
     }
     
     var globalNumber = "";
-    for(i = 0 ; i < columnValues.length ; ++i) {
+    for(var i = 0 ; i < columnValues.length ; ++i) {
       // Add zeros to smaller numbers
       for(var n = columnValues[i].toString().length ; n < maxLength ; ++n) {
         columnValues[i] = "0" + columnValues[i];
@@ -237,10 +238,9 @@ function GridCtrl($scope) {
   $scope.$on('UPDATE_GRID', function() {
     var arr = $scope.$parent.gridIndexArrays;
     $scope.reset();
-    for(var i = 0; i < arr.length; ++i) {
-      for(var j = 0; j < arr[i].length; ++j) {
-        //console.log('* enable ' + i + ',' + arr[i][j] + ' => ' + i + ',' + $scope.gridIndexes[i][arr[i][j]]);
-        $scope.enable(i, $scope.gridIndexes[i][arr[i][j]]);
+    for(var colIdx = 0; colIdx < arr.length; ++colIdx) {
+      for(var iPrime = 0; iPrime < arr[colIdx].length; ++iPrime) {
+        $scope.enable(colIdx, $scope.gridIndexes[colIdx][arr[colIdx][iPrime]]);
       }
     }
   });
@@ -254,10 +254,10 @@ function GridCtrl($scope) {
   // Plays the sounds and animations of column number i.
   var playColumn = function(colIdx) {
     //console.log("Playing column " + colIdx);
-    for(var i = 0 ; i < 8 ; ++i) {
-      if($scope.grid[i][colIdx].active) {
-        playSound(i);
-        playAnimation(i, colIdx);
+    for(var rowIdx = 0 ; rowIdx < 8; ++rowIdx) {
+      if($scope.grid[rowIdx][colIdx].active) {
+        playSound(rowIdx);
+        playAnimation(rowIdx, colIdx);
       }
     }
   };
@@ -265,7 +265,6 @@ function GridCtrl($scope) {
   // Play the animation for 1 box
   var playAnimation = function(rowIdx, colIdx) {
     var primeIdx = $scope.gridIndexes[colIdx].indexOf(rowIdx);
-    
     //console.log(primeIdx);
   };
   
@@ -283,7 +282,7 @@ function GridCtrl($scope) {
     playColumn($scope.time);
     $scope.$digest();
     
-    $scope.time = ($scope.time + 1) % 8;
+    $scope.time = ($scope.time + 1) % $scope.beats;
     setTimeout(update, $scope.$parent.period); // Call update() function every $scope.$parent.period ms
   };
   setTimeout(update, 0); // Call update() asap
