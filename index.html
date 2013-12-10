@@ -7,6 +7,9 @@
   <link href="./css/main.css" rel="stylesheet" />
 </head>
 <body ng-app ng-controller="GlobalCtrl">
+<div class="instructions">
+  Enter a number and listen.
+</div>
 <div class="form">
   <form novalidate class="simple-form">
     <input type="text" ng-model="number" size="40" ng-model-onblur ng-change="onInputChange()"/>
@@ -14,16 +17,18 @@
 </div>
 <div class="grid" ng-controller="GridCtrl" ng-show="$parent.isGridVisible">
   <div class="row row{{ $index }}" ng-repeat="row in grid">
-    <div class="cell col{{ $index }}'" ng-repeat="cell in row"
+    <div class="cell col{{ $index }}" ng-repeat="cell in row"
          ng-click="$parent.$parent.onCellClick(cell.row,cell.col)"
          ng-class="{active: cell.active}">
-
+      <span ng-show="$parent.$parent.isCellVisible(cell.row, cell.col)">{{ $parent.$parent.getPrimeNumberForCell(cell.row, cell.col) }}</span>
+      <span ng-hide="$parent.$parent.isCellVisible(cell.row, cell.col)">&nbsp;</span>
     </div>
   </div>
 </div>
-<footer>
+<div id="bar">
   <a ng-click="toggleGrid()">Toggle Grid</a>
-</footer>
+  <a href="https://github.com/MiLk/Primix">GitHub</a>
+</div>
 <script src="./js/jquery-2.0.3.min.js"></script>
 <script src="./js/bootstrap.min.js"></script>
 <script src="./js/angular.min.js"></script>

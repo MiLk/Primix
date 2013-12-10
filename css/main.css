@@ -1,6 +1,19 @@
-.form, .grid {
+html body {
+  background-color: #000; 
   text-align: center;
+}
+
+.instructions {
+  color: #fff;
+  margin-top: 5%;
+}
+
+.grid {
   margin: 0 auto;
+}
+
+.form {
+  margin: 15px auto 20px auto;
 }
 
 .row {
@@ -10,8 +23,8 @@
 }
 
 .cell {
-  margin: 2px;
-  border: #222 1px solid;
+  margin: 4px;
+  outline: #222 1px solid;
   background-color: #DDD;
   display: inline-block;
   width: 32px;
@@ -19,16 +32,47 @@
 }
 
 .cell:hover, .cell.active:hover {
-  background-color: #666;
+  background-color: #333;
 }
 
 .cell.active {
-  background-color: #AAA;
+  background-color: #888;
 }
 
-footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
+.cell span {
+  display: inline-block;
+  margin: 4px;
+  font-size: 18px;
   text-align: center;
+  color: #EEE;
+  font-weight: bold;
 }
+
+#bar {
+  position: absolute;
+  height: 100%;
+  width: 120px;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 20px 5px;
+  background: #222;
+  border-left: 1px solid #444;
+}
+
+#bar a {
+  color: #DDD;
+  display: inline-block;
+  background: #444;
+  width: 100px;
+  padding: 5px 0;
+  outline: 1px solid #666;
+  margin: 5px auto;
+}
+
+#bar a:hover {
+  cursor: pointer;
+  text-decoration: none;
+  outline: 2px solid #AAA;
+}
+

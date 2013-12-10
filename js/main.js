@@ -1,17 +1,17 @@
 $.ionSound({
-    sounds: [
-        "0",
-		"1",
-		"2",
-		"3",
-		"4",
-		"5",
-		"6",
-		"7"
-   ]
-	path: "../sounds/",
-	multiPlay: true,               // playing only 1 sound at once
-    volume: "0.3"
+  sounds: [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7"
+  ],
+	path: "sounds/",
+	multiPlay: true,  // Allows playing multiple sounds at the same time.
+  volume: "1.0"
 });
 
 $(document).ready(function() {
@@ -33,7 +33,7 @@ function GlobalCtrl($scope) {
   // -------------------------------------
   //
   // Is the grid visible ?
-  $scope.isGridVisible = false
+  $scope.isGridVisible = false;
   
   // Contains X subarrays with the prime decomposition on each column
   $scope.primeArrays  = [];
@@ -52,9 +52,8 @@ function GlobalCtrl($scope) {
   // Period of 1 note.
   $scope.period = 1000;
   
-  // -------------------------------------
-  
-  
+  // ---------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   $scope.toggleGrid = function() {
     $scope.isGridVisible = !($scope.isGridVisible);
@@ -119,6 +118,11 @@ function GlobalCtrl($scope) {
   
 }
 
+// ---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
+// Initialization functions
+// 
+
 function initGrid(grid, height, width) {
   for(var i = 0; i < height; ++i) {
     var row = [];
@@ -150,6 +154,9 @@ function initIndexes(array, height, width) {
   }
 }
 
+// ---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
+
 function GridCtrl($scope) {
   $scope.time = 0;
   $scope.grid = [];
@@ -178,28 +185,36 @@ function GridCtrl($scope) {
     $scope.grid[y][x].active = false;
   };
   
+  $scope.isCellVisible = function(row,col) {
+    return $scope.grid[row][col].active && ($scope.time == col);
+  };
+  
+  $scope.getPrimeNumberForCell = function(row, col) {
+    return Prime.primeArray[$scope.gridIndexes[col].indexOf(row)];
+  }
+  
   var recompose = function() {
     var maxLength    = 0;
     var columnValues = []; // Values computed for each column
     
     // Compute the prime number recomposition for each column
     for(var i = 0 ; i < $scope.grid.length ; ++i) {
-        var columnValue = 1;
-        for(var j = 0 ; j < $scope.grid[i].length ; ++j) {
-          if($scope.grid[j][i].active) {
-            var index = $scope.gridIndexes[i].indexOf(j);
-            columnValue *= Prime.primeArray[index];
-          }
+      var columnValue = 1;
+      for(var j = 0 ; j < $scope.grid[i].length ; ++j) {
+        if($scope.grid[j][i].active) {
+          var index = $scope.gridIndexes[i].indexOf(j);
+          columnValue *= Prime.primeArray[index];
         }
-        
-        if(columnValue == 1) {
-            columnValue = 0;
-        }
-        
-        columnValues[i] = columnValue;
-        if(columnValue.toString().length > maxLength) {
-          maxLength = columnValue.toString().length;
-        }
+      }
+      
+      if(columnValue == 1) {
+          columnValue = 0;
+      }
+      
+      columnValues[i] = columnValue;
+      if(columnValue.toString().length > maxLength) {
+        maxLength = columnValue.toString().length;
+      }
     }
     
     var globalNumber = "";
@@ -215,26 +230,6 @@ function GridCtrl($scope) {
     $scope.$parent.number = globalNumber;
   };
   
-  // Plays the sounds and animations of column number i.
-  var playColumn = function(colIdx) {
-    console.log("Playing column " + colIdx);
-    for(var i = 0 ; i < 8 ; ++i) {
-      if($scope.grid[i][colIdx].active) {
-        playSound (i);
-        playAnimation(i, colIdx);
-      }
-    }
-  };
-  
-  var playAnimation = function(rowIdx, colIdx) {
-    var primeIdx = $scope.gridIndexes[colIdx].indexOf(rowIdx);
-    console.log(primeIdx);
-  };
-  
-  var playSound = function(rowIdx) {
-		$.ionSound.play(rowIdx.toString());
-  };
-  
   /*
    * Function called when receiving an 'UPDATE_GRID' message
    * Enables the grid boxes regarding $scope.$parent.gridIndexArrays
@@ -244,19 +239,51 @@ function GridCtrl($scope) {
     $scope.reset();
     for(var i = 0; i < arr.length; ++i) {
       for(var j = 0; j < arr[i].length; ++j) {
-        console.log('* enable ' + i + ',' + arr[i][j] + ' => ' + i + ',' + $scope.gridIndexes[i][arr[i][j]]);
+        //console.log('* enable ' + i + ',' + arr[i][j] + ' => ' + i + ',' + $scope.gridIndexes[i][arr[i][j]]);
         $scope.enable(i, $scope.gridIndexes[i][arr[i][j]]);
       }
     }
   });
+  
+  // ---------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
+  // Functions called periodically to animate the grid / play the sounds
+  //
+  
+  
+  // Plays the sounds and animations of column number i.
+  var playColumn = function(colIdx) {
+    //console.log("Playing column " + colIdx);
+    for(var i = 0 ; i < 8 ; ++i) {
+      if($scope.grid[i][colIdx].active) {
+        playSound(i);
+        playAnimation(i, colIdx);
+      }
+    }
+  };
+  
+  // Play the animation for 1 box
+  var playAnimation = function(rowIdx, colIdx) {
+    var primeIdx = $scope.gridIndexes[colIdx].indexOf(rowIdx);
+    
+    //console.log(primeIdx);
+  };
+  
+  // Play the sound for 1 box
+  var playSound = function(rowIdx) {
+    console.log("play sound " + rowIdx);
+    $.ionSound.play(rowIdx.toString());
+  };
 
   /*
    * Periodic method for the reading a column of the grid
    * and play the associated sounds.
    */
   var update = function() {
-    playColumn($scope.time++);
-    $scope.time %= 8;
+    playColumn($scope.time);
+    $scope.$digest();
+    
+    $scope.time = ($scope.time + 1) % 8;
     setTimeout(update, $scope.$parent.period); // Call update() function every $scope.$parent.period ms
   };
   setTimeout(update, 0); // Call update() asap
