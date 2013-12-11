@@ -12,7 +12,7 @@
 </div>
 <div class="form">
   <form novalidate class="simple-form">
-    <input type="text" ng-model="number" size="40" ng-model-onblur ng-change="onInputChange()"/>
+    <input type="text" ng-model="number" ng-model-onblur ng-change="onInputChange()"/>
   </form>
 </div>
 <div class="grid" ng-controller="GridCtrl" ng-show="$parent.isGridVisible">
@@ -28,6 +28,9 @@
 <div id="bar">
   <a ng-click="toggleGrid()">Toggle Grid</a>
   <a href="https://github.com/MiLk/Primix">GitHub</a>
+  <form novalidate class="simple-form">
+    <input type="number" ng-model="beats" min="1" max="32" step="1" value="8" ng-model-onblur ng-change="onBeatsChange()"/>
+  </form>
 </div>
 <script src="./js/jquery-2.0.3.min.js"></script>
 <script src="./js/bootstrap.min.js"></script>

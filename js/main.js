@@ -47,7 +47,7 @@ function GlobalCtrl($scope) {
   // gridIndexArrays is close to primeArraysIndexes
   // It contains the indexes modulo the height of the grid.
   // Moreover, there is no double in the subarrays.
-  $scope.gridIndexArrays
+  $scope.gridIndexArrays = [];
   
   // Period of 1 note.
   $scope.period = 1000;
@@ -67,6 +67,15 @@ function GlobalCtrl($scope) {
    */
   $scope.onInputChange = function() {
     $scope.decompose($scope.beats);
+    $scope.fillGrid(8);
+  };
+  
+  /*
+   * Callback function for beats
+   */
+  $scope.onBeatsChange = function() {
+    //$scope.decompose($scope.beats);
+    $scope.resetGrid();
     $scope.fillGrid(8);
   };
   
@@ -117,6 +126,10 @@ function GlobalCtrl($scope) {
     $scope.$broadcast('UPDATE_GRID');
   };
   
+  $scope.resetGrid = function() {
+    $scope.$broadcast('RESET_GRID');
+  }
+  
 }
 
 // ---------------------------------------------------------------------------
@@ -159,6 +172,7 @@ function initIndexes(array, height, width) {
 // ---------------------------------------------------------------------------
 
 function GridCtrl($scope) {
+  //$scope.resetGrid();
   $scope.time = 0;
   $scope.grid = []; // This is the only [row][col] array in this file !
   $scope.gridIndexes = [];
@@ -170,12 +184,21 @@ function GridCtrl($scope) {
     recompose();
   };
   
-  $scope.reset = function() {
+  $scope.cleanGrid = function() {
     for(var rowIdx = 0; rowIdx < $scope.grid.length; ++rowIdx) {
       for(var colIdx = 0; colIdx < $scope.grid[rowIdx].length; ++colIdx) {
         this.disable(colIdx, rowIdx);
       }
     }
+  };
+  
+  $scope.resetGrid = function() {
+    $scope.time = 0;
+    $scope.grid = []; // This is the only [row][col] array in this file !
+    $scope.gridIndexes = [];
+    initGrid($scope.grid, 8, $scope.beats);
+    initIndexes($scope.gridIndexes, 8, $scope.beats);
+    $scope.$digest();
   };
   
   $scope.enable = function(colIdx, rowIdx) {
@@ -192,7 +215,7 @@ function GridCtrl($scope) {
   
   $scope.getPrimeNumberForCell = function(rowIdx, colIdx) {
     return Prime.primeArray[$scope.gridIndexes[colIdx].indexOf(rowIdx)];
-  }
+  };
   
   var recompose = function() {
     var maxLength    = 0;
@@ -212,7 +235,7 @@ function GridCtrl($scope) {
           columnValue = 0;
       }
       
-      columnValues[i] = columnValue;
+      columnValues[colIdx] = columnValue;
       if(columnValue.toString().length > maxLength) {
         maxLength = columnValue.toString().length;
       }
@@ -237,12 +260,20 @@ function GridCtrl($scope) {
    */
   $scope.$on('UPDATE_GRID', function() {
     var arr = $scope.$parent.gridIndexArrays;
-    $scope.reset();
+    $scope.cleanGrid();
     for(var colIdx = 0; colIdx < arr.length; ++colIdx) {
       for(var iPrime = 0; iPrime < arr[colIdx].length; ++iPrime) {
         $scope.enable(colIdx, $scope.gridIndexes[colIdx][arr[colIdx][iPrime]]);
       }
     }
+  });
+  
+  /*
+   * Function called when receiving an 'RESET_GRID' message
+   * Enables the grid boxes regarding $scope.$parent.gridIndexArrays
+   */
+  $scope.$on('RESET_GRID', function() {
+    $scope.resetGrid();
   });
   
   // ---------------------------------------------------------------------------
