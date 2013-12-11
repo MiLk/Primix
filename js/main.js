@@ -127,6 +127,7 @@ function GlobalCtrl($scope) {
   };
   
   $scope.resetGrid = function() {
+    $scope.number = "";
     $scope.$broadcast('RESET_GRID');
   }
   
@@ -222,9 +223,9 @@ function GridCtrl($scope) {
     var columnValues = []; // Values computed for each column
     
     // Compute the prime number recomposition for each column
-    for(var rowIdx = 0 ; rowIdx < $scope.grid.length ; ++rowIdx) {
+    for(var colIdx = 0 ; colIdx < $scope.grid[0].length ; ++colIdx) {
       var columnValue = 1;
-      for(var colIdx = 0 ; colIdx < $scope.grid[rowIdx].length ; ++colIdx) {
+      for(var rowIdx = 0 ; rowIdx < $scope.grid.length ; ++rowIdx) {
         if($scope.grid[rowIdx][colIdx].active) {
           var index = $scope.gridIndexes[colIdx].indexOf(rowIdx);
           columnValue *= Prime.primeArray[index];
