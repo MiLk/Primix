@@ -75,6 +75,7 @@ function GlobalCtrl($scope) {
    */
   $scope.onBeatsChange = function() {
     $scope.resetGrid();
+    $scope.decompose($scope.beats);
     $scope.fillGrid(8);
   };
   
@@ -126,7 +127,6 @@ function GlobalCtrl($scope) {
   };
   
   $scope.resetGrid = function() {
-    $scope.number = "";
     $scope.$broadcast('RESET_GRID');
   }
   
