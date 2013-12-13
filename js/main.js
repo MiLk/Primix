@@ -180,8 +180,10 @@ function GridCtrl($scope) {
   initIndexes($scope.gridIndexes, 8, $scope.beats);
 
   $scope.onCellClick = function(row,col) {
-    $scope.grid[row][col].active = !($scope.grid[row][col].active);
-    recompose();
+    if($scope.$parent.isGridVisible == true) {
+      $scope.grid[row][col].active = !($scope.grid[row][col].active);
+      recompose();
+    }
   };
   
   $scope.cleanGrid = function() {

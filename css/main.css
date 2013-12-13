@@ -24,18 +24,22 @@ html body {
 
 .cell {
   margin: 4px;
-  outline: #222 1px solid;
-  background-color: #DDD;
+  background-color: #000;
   display: inline-block;
   width: 32px;
   height: 32px;
 }
 
-.cell:hover, .cell.active:hover {
+.grid.is_visible .cell {
+  outline: #222 1px solid;
+  background-color: #DDD;
+}
+
+.grid.is_visible .cell:hover, .grid.is_visible .cell.active:hover {
   background-color: #333;
 }
 
-.cell.active {
+.grid.is_visible .cell.active {
   background-color: #888;
 }
 
@@ -58,6 +62,7 @@ html body {
   padding: 20px 5px;
   background: #222;
   border-left: 1px solid #444;
+  color: #DDD;
 }
 
 #bar a {
