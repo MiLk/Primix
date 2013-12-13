@@ -50,7 +50,7 @@ function GlobalCtrl($scope) {
   $scope.gridIndexArrays = [];
   
   // Period of 1 note.
-  $scope.period = 1000;
+  $scope.period = 700;
   
   // Number of beats
   $scope.beats = 8;
@@ -74,7 +74,6 @@ function GlobalCtrl($scope) {
    * Callback function for beats
    */
   $scope.onBeatsChange = function() {
-    //$scope.decompose($scope.beats);
     $scope.resetGrid();
     $scope.fillGrid(8);
   };
