@@ -1,13 +1,13 @@
 $.ionSound({
   sounds: [
-    "Bell_0",
+	"Bell_0",
     "Bell_1",
     "Bell_2",
     "Bell_3",
     "Bell_4",
     "Bell_5",
     "Bell_6",
-    "Bell_7"
+    "Bell_7" 
   ],
 	path: "sounds/Bell/",
 	multiPlay: true,  // Allows playing multiple sounds at the same time.
@@ -289,7 +289,7 @@ function GridCtrl($scope) {
     //console.log("Playing column " + colIdx);
     for(var rowIdx = 0 ; rowIdx < 8; ++rowIdx) {
       if($scope.grid[rowIdx][colIdx].active) {
-        playSound(rowIdx);
+        playSound("Bell_" + rowIdx);
         playAnimation(rowIdx, colIdx);
       }
     }
