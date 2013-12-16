@@ -9,7 +9,7 @@ $.ionSound({
     "Bell_6",
     "Bell_7"
   ],
-	path: "sounds/Bell",
+	path: "sounds/Bell/",
 	multiPlay: true,  // Allows playing multiple sounds at the same time.
   volume: "1.0"
 });
