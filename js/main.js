@@ -56,7 +56,7 @@ function GlobalCtrl($scope) {
   $scope.beats = 8;
   
   //Sound to play
-  $scope.soundToPlay = "Bell_";
+  $scope.soundToPlay = "Bell";
   
   // ---------------------------------------------------------------------------
   // ---------------------------------------------------------------------------
@@ -296,7 +296,7 @@ function GridCtrl($scope) {
     //console.log("Playing column " + colIdx);
     for(var rowIdx = 0 ; rowIdx < 8; ++rowIdx) {
       if($scope.grid[rowIdx][colIdx].active) {       
-		playSound($scope.soundToPlay + rowIdx);
+		playSound($scope.soundToPlay + "_" + rowIdx);
         playAnimation(rowIdx, colIdx);
       }
     }
@@ -311,7 +311,7 @@ function GridCtrl($scope) {
   // Play the sound for 1 box
   var playSound = function(rowIdx) {
     console.log("play sound " + rowIdx);
-    $.ionSound.play($scope.soundToPlay + "_" + rowIdx.toString());
+   $.ionSound.play(rowIdx.toString());
   };
 
   /*
