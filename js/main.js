@@ -5,7 +5,7 @@ $.ionSound({
 	"GrandPiano_0", "GrandPiano_1", "GrandPiano_2", "GrandPiano_3", "GrandPiano_4", "GrandPiano_5", "GrandPiano_6", "GrandPiano_7",
 	"Marimba_0", "Marimba_1", "Marimba_2", "Marimba_3", "Marimba_4", "Marimba_5", "Marimba_6", "Marimba_7",
 	"Marine_0", "Marine_1", "Marine_2", "Marine_3", "Marine_4", "Marine_5", "Marine_6", "Marine_7",
-	"Tamal_0", "Tamal_1", "Tamal_2", "Tamal_3", "Tamal_4", "Tamal_5", "Tamal_6", "Tamal_7", 		
+	"Tamal_0", "Tamal_1", "Tamal_2", "Tamal_3", "Tamal_4", "Tamal_5", "Tamal_6", "Tamal_7"
   ],
 	path: "sounds/",
 	multiPlay: true,  // Allows playing multiple sounds at the same time.
@@ -296,7 +296,7 @@ function GridCtrl($scope) {
     //console.log("Playing column " + colIdx);
     for(var rowIdx = 0 ; rowIdx < 8; ++rowIdx) {
       if($scope.grid[rowIdx][colIdx].active) {       
-		playSound($scope.soundToPlay + "_" + rowIdx);
+        playSound(rowIdx);
         playAnimation(rowIdx, colIdx);
       }
     }
@@ -310,8 +310,8 @@ function GridCtrl($scope) {
   
   // Play the sound for 1 box
   var playSound = function(rowIdx) {
-    console.log("play sound " + rowIdx);
-   $.ionSound.play(rowIdx.toString());
+    console.log("play sound " + $scope.soundToPlay + "_" + rowIdx);
+   $.ionSound.play($scope.soundToPlay + "_" + rowIdx.toString());
   };
 
   /*
