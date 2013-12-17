@@ -14,8 +14,10 @@
   Enter a sequence of figures and listen.
 </div>
 <div class="form">
-  <form novalidate class="simple-form">
-    <input type="text" ng-model="number" ng-model-onblur ng-change="onInputChange()"/>
+  <form novalidate>
+    <div class="form-group">
+      <input type="text" class="form-control" ng-model="number" ng-model-onblur ng-change="onInputChange()"/>
+    </div>
   </form>
 </div>
 <div class="grid ng-cloak" ng-controller="GridCtrl" ng-class="{is_visible: $parent.isGridVisible}">
@@ -35,9 +37,15 @@ Phasellus ut risus condimentum, semper quam non, viverra justo. Phasellus cursus
 </div>
 <div id="bar">
   <a ng-click="toggleGrid()">Toggle Grid</a>
-  <form novalidate class="simple-form">
-    Beats: <input type="number" ng-model="beats" min="1" max="32" step="1" value="8" ng-model-onblur ng-change="onBeatsChange()"/>
-    Period: <input type="number" ng-model="period" min="300" max="1000" step="100" value="700" ng-model-onblur />
+  <form novalidate>
+    <div class="form-group">
+      <label for="inputBeats">Beats</label>
+      <input type="number" class="form-control" id="inputBeats" ng-model="beats" min="1" max="32" step="1" value="8" ng-model-onblur ng-change="onBeatsChange()"/>
+    </div>
+    <div class="form-group">
+      <label for="inputPeriod">Period</label>
+      <input type="number" class="form-control" id="inputPeriod" ng-model="period" min="300" max="1000" step="100" value="700" ng-model-onblur />
+    </div>
   </form>
   <div class="bottom">
     <a ng-click="toggleHelp()">Help</a>
