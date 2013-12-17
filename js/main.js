@@ -296,7 +296,7 @@ function GridCtrl($scope) {
     //console.log("Playing column " + colIdx);
     for(var rowIdx = 0 ; rowIdx < 8; ++rowIdx) {
       if($scope.grid[rowIdx][colIdx].active) {       
-		playSound($scope.sound + rowIdx);
+		playSound($scope.soundToPlay + rowIdx);
         playAnimation(rowIdx, colIdx);
       }
     }
