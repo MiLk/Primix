@@ -7,9 +7,6 @@
   <link href="./css/main.css" rel="stylesheet" />
 </head>
 <body ng-app ng-controller="GlobalCtrl">
-<div class="logo">
-  <img src="logo_primix.png">
-</div>
 <div class="instructions">
   Enter a sequence of figures and listen.
 </div>
@@ -33,7 +30,15 @@
   <a href="https://github.com/MiLk/Primix">GitHub</a>
   <form novalidate class="simple-form">
     Beats: <input type="number" ng-model="beats" min="1" max="32" step="1" value="8" ng-model-onblur ng-change="onBeatsChange()"/>
-    Period: <input type="number" ng-model="period" min="300" max="1000" step="100" value="700" ng-model-onblur />
+    Period: <input type="number" ng-model="period" min="300" max="1000" step="100" value="700" />
+	Sound: 	<select id="soundToPlay" ng-model="soundToPlay"> 
+				<option value="Amyleigh_">Amyleigh</option> 
+				<option value="Bell_" >Bell</option> 
+				<option value="GrandPiano_">Grand Piano</option> 
+				<option value="Marimba_">Marimba</option> 
+				<option value="Marine_">Marine</option> 
+				<option value="Tamal_">Tamal</option> 
+			</select> 
   </form>
 </div>
 <script src="./js/jquery-2.0.3.min.js"></script>
