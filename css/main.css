@@ -24,6 +24,39 @@ html body {
   margin: 0;
   padding: 0;
   height: 38px;
+  color: #EEE;
+}
+
+.row0 {
+  color : #33F
+}
+
+.row1 {
+  color : #C00
+}
+
+.row2 {
+  color : #70A
+}
+
+.row3 {
+  color : #F70
+}
+
+.row4 {
+  color : #3F6
+}
+
+.row5 {
+  color : #FF0
+}
+
+.row6 {
+  color : #0FF
+}
+
+.row7 {
+  color : #F9C
 }
 
 .cell {
@@ -52,7 +85,6 @@ html body {
   margin: 4px;
   font-size: 18px;
   text-align: center;
-  color: #EEE;
   font-weight: bold;
 }
 
