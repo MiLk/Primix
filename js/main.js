@@ -311,7 +311,7 @@ function GridCtrl($scope) {
   // Play the sound for 1 box
   var playSound = function(rowIdx) {
     console.log("play sound " + rowIdx);
-    $.ionSound.play(rowIdx.toString());
+    $.ionSound.play($scope.soundToPlay + "_" + rowIdx.toString());
   };
 
   /*
