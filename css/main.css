@@ -3,6 +3,10 @@ html body {
   text-align: center;
 }
 
+.logo {
+   margin: 20px auto;
+}
+
 .instructions {
   color: #fff;
   margin-top: 5%;
@@ -80,4 +84,3 @@ html body {
   text-decoration: none;
   outline: 2px solid #AAA;
 }
-
