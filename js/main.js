@@ -32,6 +32,8 @@ function GlobalCtrl($scope) {
   //
   // Is the grid visible ?
   $scope.isGridVisible = false;
+  // Is the help visible ?
+  $scope.isHelpVisible = false;
   
   // Contains X subarrays with the prime decomposition on each column
   $scope.primeArrays  = [];
@@ -63,6 +65,10 @@ function GlobalCtrl($scope) {
     $scope.isGridVisible = !($scope.isGridVisible);
   };
   
+  $scope.toggleHelp = function() {
+    $scope.isHelpVisible = !($scope.isHelpVisible);
+  };
+
   /*
    * Callback function of the form input.
    */
@@ -181,7 +187,7 @@ function GridCtrl($scope) {
   initIndexes($scope.gridIndexes, 8, $scope.beats);
 
   $scope.onCellClick = function(row,col) {
-    if($scope.$parent.isGridVisible == true) {
+    if($scope.$parent.isGridVisible === true) {
       $scope.grid[row][col].active = !($scope.grid[row][col].active);
       recompose();
     }

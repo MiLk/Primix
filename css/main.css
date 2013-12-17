@@ -20,10 +20,53 @@ html body {
   margin: 15px auto 20px auto;
 }
 
+.form form {
+  width: 240px;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.form form input {
+  text-align: right;
+}
+
 .row {
   margin: 0;
   padding: 0;
   height: 38px;
+  color: #EEE;
+}
+
+.row0 {
+  color : #33F
+}
+
+.row1 {
+  color : #C00
+}
+
+.row2 {
+  color : #70A
+}
+
+.row3 {
+  color : #F70
+}
+
+.row4 {
+  color : #3F6
+}
+
+.row5 {
+  color : #FF0
+}
+
+.row6 {
+  color : #0FF
+}
+
+.row7 {
+  color : #F9C
 }
 
 .cell {
@@ -52,18 +95,17 @@ html body {
   margin: 4px;
   font-size: 18px;
   text-align: center;
-  color: #EEE;
   font-weight: bold;
 }
 
 #bar {
   position: absolute;
   height: 100%;
-  width: 140px;
+  width: 160px;
   top: 0;
   right: 0;
   margin: 0;
-  padding: 20px 5px;
+  padding: 10px 20px;
   background: #222;
   border-left: 1px solid #444;
   color: #DDD;
@@ -73,7 +115,7 @@ html body {
   color: #DDD;
   display: inline-block;
   background: #444;
-  width: 100px;
+  width: 120px;
   padding: 5px 0;
   outline: 1px solid #666;
   margin: 5px auto;
@@ -84,3 +126,30 @@ html body {
   text-decoration: none;
   outline: 2px solid #AAA;
 }
+
+#bar .bottom {
+  position: absolute;
+  width: 120px;
+  bottom: 10px;
+  right: 20px;
+  margin: 0 auto;
+}
+
+.help {
+  position: absolute;
+  bottom: 55px;
+  min-height: 200px;
+  width: 40%;
+  right: 140px;
+  padding: 20px 20px;
+  background: #222;
+  border: 1px solid #444;
+  border-right: none;
+  color: #DDD;
+  text-align: left;
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
