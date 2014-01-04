@@ -153,6 +153,7 @@ function GlobalCtrl($scope) {
         $scope.beats = 12;
         break;
     }
+    $scope.period = 300;
     $scope.onBeatsChange();
     $scope.onInputChange();
   }
