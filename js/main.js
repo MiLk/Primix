@@ -136,7 +136,26 @@ function GlobalCtrl($scope) {
   $scope.resetGrid = function() {
     $scope.$broadcast('RESET_GRID');
   }
-  
+
+  $scope.doTry = function() {
+    switch($scope.number) {
+      case '190017030003000017000500':
+        $scope.number = '07030711071117050205021902190700';
+        $scope.beats = 16;
+        break;
+      case '07030711071117050205021902190700':
+        $scope.number = '191300071300190019001700130000050300';
+        $scope.beats = 18;
+        break;
+      case '191300071300190019001700130000050300':
+      default:
+        $scope.number = '190017030003000017000500';
+        $scope.beats = 12;
+        break;
+    }
+    $scope.onBeatsChange();
+    $scope.onInputChange();
+  }
 }
 
 // ---------------------------------------------------------------------------
